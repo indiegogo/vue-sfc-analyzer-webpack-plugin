@@ -1,0 +1,42 @@
+{
+  "name": "vue-sfc-analyzer-webpack-plugin",
+  "version": "0.0.1",
+  "description": "Webpack plugin for analyzing Vue SFC",
+  "main": "dist/vue-sfc-analyzer-webpack-plugin.js",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --module commonjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/indiegogo/webpack-vue-sfc-analyzer-plugin.git"
+  },
+  "keywords": [
+    "webpack",
+    "plugin",
+    "vue"
+  ],
+  "author": "Kengo Hamasaki <kengo@indiegogo.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/indiegogo/webpack-vue-sfc-analyzer-plugin/issues"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.0",
+    "@types/mkdirp": "^0.5.2",
+    "@types/node": "^9.4.7",
+    "@types/webpack": "^3",
+    "chalk": "^2.3.2",
+    "jest": "^22.4.2",
+    "mkdirp": "^0.5.1",
+    "ts-jest": "^22.4.1",
+    "typescript": "^2.7.2",
+    "webpack": "^3"
+  }
+}
