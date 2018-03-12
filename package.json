@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Webpack plugin for analyzing Vue SFC",
   "main": "dist/vue-sfc-analyzer-webpack-plugin.js",
+  "main": "dist/VueSFCAnalyzerWebpackPlugin.js",
   "engines": {
     "node": ">=6.0.0"
   },
