@@ -40,6 +40,8 @@ describe("VueSFCAnalyzerWebpackPlugin", () => {
 });
 
 describe("with Webpack", () => {
+  jest.setTimeout(10000);
+
   const webpackOption = (plugin) => {
     return {
       entry: {
