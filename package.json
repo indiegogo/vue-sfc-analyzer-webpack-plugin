@@ -2,14 +2,14 @@
   "name": "vue-sfc-analyzer-webpack-plugin",
   "version": "0.0.1",
   "description": "Webpack plugin for analyzing Vue SFC",
-  "main": "dist/vue-sfc-analyzer-webpack-plugin.js",
   "main": "dist/VueSFCAnalyzerWebpackPlugin.js",
   "engines": {
     "node": ">=6.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --module commonjs"
+    "build": "tsc --module commonjs",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "files": [
     "dist"
@@ -34,10 +34,36 @@
     "@types/node": "^9.4.7",
     "@types/webpack": "^3",
     "chalk": "^2.3.2",
+    "css-loader": "^0.28.10",
     "jest": "^22.4.2",
     "mkdirp": "^0.5.1",
     "ts-jest": "^22.4.1",
-    "typescript": "^2.7.2",
+    "ts-loader": "^3",
+    "typescript": "~2.7.1",
+    "vue": "^2.5.15",
+    "vue-loader": "^14.2.1",
+    "vue-template-compiler": "^2.5.15",
     "webpack": "^3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      ".ts": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ],
+    "modulePathIgnorePatterns": [
+      "/test/fixtures/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ]
   }
 }

@@ -10,7 +10,7 @@ const SECTION_STYLE = "style";
 
 type VueSFCAnalyzerSectionName = "template" | "script" | "style";
 
-interface VueSFCAnalyzerRecord {
+export interface VueSFCAnalyzerRecord {
   [filePath: string]: {
     template: {
       size: number;
@@ -32,8 +32,8 @@ export interface VueSFCAnalyzerWebpackPluginOption {
 }
 
 class VueSFCAnalyzerWebpackPlugin {
-  private records: VueSFCAnalyzerRecord;
-  private opts: VueSFCAnalyzerWebpackPluginOption;
+  records: VueSFCAnalyzerRecord;
+  opts: VueSFCAnalyzerWebpackPluginOption;
 
   constructor (opts: VueSFCAnalyzerWebpackPluginOption = {}) {
     this.records = {};
