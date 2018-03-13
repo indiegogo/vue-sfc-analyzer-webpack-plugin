@@ -4,23 +4,23 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as mkdir from "mkdirp";
 
-const SECTION_TEMPLATE = "template";
-const SECTION_SCRIPT = "script";
-const SECTION_STYLE = "style";
-
-type VueSFCAnalyzerSectionName = "template" | "script" | "style";
+export const enum SFCSection {
+  Template = "template",
+  Script = "script",
+  Style = "style"
+};
 
 export interface VueSFCAnalyzerRecord {
   [filePath: string]: {
-    template: {
+    [SFCSection.Template]: {
       size: number;
       source: string;
     };
-    script: {
+    [SFCSection.Script]: {
       size: number;
       source: string;
     };
-    style: {
+    [SFCSection.Style]: {
       size: number,
       sources: string[];
     };
@@ -67,29 +67,29 @@ class VueSFCAnalyzerWebpackPlugin {
     compiler.plugin("done", () => {
       if (this.opts.showSummary) {
         const whole = {
-          [SECTION_TEMPLATE]: 0,
-          [SECTION_SCRIPT]: 0,
-          [SECTION_STYLE]: 0
+          [SFCSection.Template]: 0,
+          [SFCSection.Script]: 0,
+          [SFCSection.Style]: 0
         };
         Object.keys(this.records).forEach((filePath) => {
-          const templateSize = this.records[filePath][SECTION_TEMPLATE].size;
-          const scriptSize = this.records[filePath][SECTION_SCRIPT].size;
-          const styleSize = this.records[filePath][SECTION_STYLE].size;
+          const templateSize = this.records[filePath][SFCSection.Template].size;
+          const scriptSize = this.records[filePath][SFCSection.Script].size;
+          const styleSize = this.records[filePath][SFCSection.Style].size;
           const total = templateSize + scriptSize + styleSize;
-          whole[SECTION_TEMPLATE] += templateSize;
-          whole[SECTION_SCRIPT] += scriptSize;
-          whole[SECTION_STYLE] += styleSize;
+          whole[SFCSection.Template] += templateSize;
+          whole[SFCSection.Script] += scriptSize;
+          whole[SFCSection.Style] += styleSize;
 
           console.log(chalk.underline(chalk.green(`[Compiled] ${filePath}:`)));
           console.log(`  ${chalk.redBright("<template>")}: ${templateSize} bytes (${Math.round(templateSize / total * 100)}%)`);
           console.log(`  ${chalk.blueBright("<script>")}  : ${scriptSize} bytes (${Math.round(scriptSize / total * 100)}%)`);
           console.log(`  ${chalk.magentaBright("<style>")}   : ${styleSize} bytes (${Math.round(styleSize / total * 100)}%)`);
         });
-        const wholeTotal = whole[SECTION_TEMPLATE] + whole[SECTION_SCRIPT] + whole[SECTION_STYLE];
+        const wholeTotal = whole[SFCSection.Template] + whole[SFCSection.Script] + whole[SFCSection.Style];
         console.log(chalk.underline("Total all of .vue file:"));
-        console.log(`  ${chalk.redBright("<template>")}: ${whole[SECTION_TEMPLATE]} bytes (${Math.round(whole[SECTION_TEMPLATE] / wholeTotal * 100)}%)`);
-        console.log(`  ${chalk.blueBright("<script>")}  : ${whole[SECTION_SCRIPT]} bytes (${Math.round(whole[SECTION_SCRIPT] / wholeTotal * 100)}%)`);
-        console.log(`  ${chalk.magentaBright("<style>")}   : ${whole[SECTION_STYLE]} bytes (${Math.round(whole[SECTION_STYLE] / wholeTotal * 100)}%)`);
+        console.log(`  ${chalk.redBright("<template>")}: ${whole[SFCSection.Template]} bytes (${Math.round(whole[SFCSection.Template] / wholeTotal * 100)}%)`);
+        console.log(`  ${chalk.blueBright("<script>")}  : ${whole[SFCSection.Script]} bytes (${Math.round(whole[SFCSection.Script] / wholeTotal * 100)}%)`);
+        console.log(`  ${chalk.magentaBright("<style>")}   : ${whole[SFCSection.Style]} bytes (${Math.round(whole[SFCSection.Style] / wholeTotal * 100)}%)`);
       }
 
       if (this.opts.statsFilename) {
@@ -105,29 +105,29 @@ class VueSFCAnalyzerWebpackPlugin {
     const source = "";
     const size = 0;
     this.records[filePath] = {
-      [SECTION_TEMPLATE]: { source, size },
-      [SECTION_SCRIPT]: { source, size },
-      [SECTION_STYLE]: { sources: [], size }
+      [SFCSection.Template]: { source, size },
+      [SFCSection.Script]: { source, size },
+      [SFCSection.Style]: { sources: [], size }
     };
   }
 
-  private getSectionByPortableId (portableId: string): VueSFCAnalyzerSectionName | undefined {
+  private getSectionByPortableId (portableId: string): SFCSection | undefined {
     // Should parse loader ideally, and not support pure JS of <script> yet
     if (portableId.match(/^node_modules\/vue-loader\/lib\/template-compiler\//)) {
-      return SECTION_TEMPLATE;
+      return SFCSection.Template;
     } else if (portableId.match(/^node_modules\/ts-loader\/index\.js/)) {
-      return SECTION_SCRIPT;
+      return SFCSection.Script;
     } else if (
       portableId.match(/^node_modules\/vue-style-loader\/index\.js/) ||
       portableId.match(/^node_modules\/css-loader\/index\.js/)
     ) {
-      return SECTION_STYLE;
+      return SFCSection.Style;
     }
   }
 
-  private storeSource (filePath: string, source: string, section: VueSFCAnalyzerSectionName) {
+  private storeSource (filePath: string, source: string, section: SFCSection) {
     const size = Buffer.byteLength(source, "utf8");
-    if (section === SECTION_STYLE) {
+    if (section === SFCSection.Style) {
       this.records[filePath][section].sources.push(source);
       this.records[filePath][section].size = size;
     } else {
