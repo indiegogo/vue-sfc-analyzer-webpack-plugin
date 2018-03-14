@@ -8,7 +8,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "build": "tsc --module commonjs",
+    "build": "tsc -p tsconfig.json",
     "test": "jest",
     "test:watch": "jest --watch"
   },
