@@ -113,6 +113,19 @@ describe("with Webpack", () => {
       });
     });
 
+    it("should record result of the basic component by JS (TestComponentJS.vue)", (done) => {
+      webpack(webpackOption(plugin)).run((err, stats) => {
+        const record = recordFor("TestComponentJS.vue");
+        expect(record.template.size).toBeGreaterThan(0);
+        expect(record.template.source.length).toBeGreaterThan(0);
+        expect(record.script.size).toBeGreaterThan(0);
+        expect(record.script.source.length).toBeGreaterThan(0);
+        expect(record.style.size).toBeGreaterThan(0);
+        expect(record.style.sources.length).toBe(2);
+        done();
+      });
+    });
+
     it("should record result of the component without style section (TestComponentWithoutStyle.vue)", (done) => {
       webpack(webpackOption(plugin)).run((err, stats) => {
         const record = recordFor("TestComponentWithoutStyle.vue");

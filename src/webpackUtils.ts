@@ -4,13 +4,14 @@ export const sectionByPortableId = (module: any): keyof VueSFCAnalyzerRecord | v
   const { portableId } = module;
   if (vueFilePathByPortableId(portableId)) {
     // Should parse loader ideally, and not support pure JS of <script> yet
-    if (portableId.match(/^node_modules\/vue-loader\/lib\/template-compiler\//)) {
+    if (portableId.match(/\/vue-loader\/lib\/selector\.js\?type=template&index=\d!([\w\-_/\.]+\.vue)$/)) {
       return "template";
-    } else if (portableId.match(/^node_modules\/ts-loader\/index\.js/)) {
+    } else if (
+      portableId.match(/\/vue-loader\/lib\/selector\.js\?type=script&index=\d!([\w\-_/\.]+\.vue)$/)
+    ) {
       return "script";
     } else if (
-      portableId.match(/^node_modules\/vue-style-loader\/index\.js/) ||
-      portableId.match(/^node_modules\/css-loader\/index\.js/)
+      portableId.match(/\/vue-loader\/lib\/selector\.js\?type=styles&index=\d!([\w\-_/\.]+\.vue)$/)
     ) {
       return "style";
     }
