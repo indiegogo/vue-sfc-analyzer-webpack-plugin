@@ -44,7 +44,8 @@
     "vue": "^2.5.15",
     "vue-loader": "^14.2.1",
     "vue-template-compiler": "^2.5.15",
-    "webpack": "^3"
+    "webpack": "^3",
+    "winston": "^2.4.1"
   },
   "jest": {
     "testEnvironment": "node",
