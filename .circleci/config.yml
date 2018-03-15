@@ -10,7 +10,7 @@ jobs:
           command: npm install
       - run:
           name: Run test
-          command: npm run test
+          command: npm test
 
 workflows:
   version: 2
