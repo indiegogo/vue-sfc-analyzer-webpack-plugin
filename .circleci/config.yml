@@ -5,12 +5,24 @@ jobs:
       - image: circleci/node:6
     steps:
       - checkout
+
+      - restore_cache:
+          keys:
+            - yarn-{{ checksum "yarn.lock" }}
+            - yarn-
+
       - run:
-          name: Install NPM modules
-          command: npm install
+          name: Yarn Install
+          command: yarn install --cache-folder ~/.cache/yarn
+
       - run:
           name: Run test
-          command: npm test
+          command: yarn test
+
+      - save_cache:
+          key: yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 
 workflows:
   version: 2
