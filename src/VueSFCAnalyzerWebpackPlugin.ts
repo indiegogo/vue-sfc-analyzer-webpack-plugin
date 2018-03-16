@@ -1,11 +1,19 @@
 import * as path from 'path';
 import { Compiler } from "webpack";
-import winston from "winston";
+const winston = require('winston');
 
 import { sectionByPortableId, vueFilePathByPortableId } from "./webpackUtils";
 import { show, dump } from "./stats";
 
-winston.level = process.env.NODE_ENV === "test" ? "warning" : "info";
+winston.configure({
+  level: process.env.NODE_ENV === "test" ? "warning" : "info",
+  transports: [
+    new winston.transports.Console({
+      colorize: true,
+      showLevel: false
+    })
+  ]
+});
 
 export interface VueSFCAnalyzerRecord {
   template: {

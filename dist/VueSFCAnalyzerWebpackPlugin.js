@@ -9,10 +9,18 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
-var winston_1 = require("winston");
+var winston = require('winston');
 var webpackUtils_1 = require("./webpackUtils");
 var stats_1 = require("./stats");
-winston_1.default.level = process.env.NODE_ENV === "test" ? "warning" : "info";
+winston.configure({
+    level: process.env.NODE_ENV === "test" ? "warning" : "info",
+    transports: [
+        new winston.transports.Console({
+            colorize: true,
+            showLevel: false
+        })
+    ]
+});
 var VueSFCAnalyzerWebpackPlugin = /** @class */ (function () {
     function VueSFCAnalyzerWebpackPlugin(opts) {
         if (opts === void 0) { opts = {}; }
@@ -21,7 +29,7 @@ var VueSFCAnalyzerWebpackPlugin = /** @class */ (function () {
     }
     VueSFCAnalyzerWebpackPlugin.prototype.apply = function (compiler) {
         var _this = this;
-        winston_1.default.info("WebpackVueSFCAnalyzerPlugin is Enabled");
+        winston.info("WebpackVueSFCAnalyzerPlugin is Enabled");
         compiler.plugin("emit", function (compilation, callback) {
             compilation.chunks.forEach(function (chunk) {
                 chunk.forEachModule(_this.recordSFCStats.bind(_this));

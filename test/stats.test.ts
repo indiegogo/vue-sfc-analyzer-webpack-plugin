@@ -48,39 +48,41 @@ describe("stats", () => {
     });
 
     it("tells about the file written", () => {
-      winston.info = jest.fn();
+      const logger = jest.fn();
+      winston.info = logger;
       dump("somewhere.json", sampleRecords);
-      expect(winston.info.mock.calls[0][0]).toContain("WebpackVueSFCAnalyzerPlugin saved stats file to somewhere.json");
+      expect(logger.mock.calls[0][0]).toContain("WebpackVueSFCAnalyzerPlugin saved stats file to somewhere.json");
     });
   });
 
   describe("show", () => {
     it("shows summary", () => {
-      winston.info = jest.fn();
+      const logger = jest.fn();
+      winston.info = logger;
       show(sampleRecords);
-      expect(winston.info.mock.calls[0][0]).toContain("[Compiled] fixtures/TestComponent.vue");
-      expect(winston.info.mock.calls[1][0]).toContain("<template>");
-      expect(winston.info.mock.calls[1][0]).toContain("507 bytes ");
-      expect(winston.info.mock.calls[2][0]).toContain("<script>");
-      expect(winston.info.mock.calls[2][0]).toContain("897 bytes ");
-      expect(winston.info.mock.calls[3][0]).toContain("<style>");
-      expect(winston.info.mock.calls[3][0]).toContain("1900 bytes ");
+      expect(logger.mock.calls[0][0]).toContain("[Compiled] fixtures/TestComponent.vue");
+      expect(logger.mock.calls[1][0]).toContain("<template>");
+      expect(logger.mock.calls[1][0]).toContain("507 bytes ");
+      expect(logger.mock.calls[2][0]).toContain("<script>");
+      expect(logger.mock.calls[2][0]).toContain("897 bytes ");
+      expect(logger.mock.calls[3][0]).toContain("<style>");
+      expect(logger.mock.calls[3][0]).toContain("1900 bytes ");
 
-      expect(winston.info.mock.calls[4][0]).toContain("[Compiled] fixtures/TestComponentWithoutStyle.vue");
-      expect(winston.info.mock.calls[5][0]).toContain("<template>");
-      expect(winston.info.mock.calls[5][0]).toContain("519 bytes ");
-      expect(winston.info.mock.calls[6][0]).toContain("<script>");
-      expect(winston.info.mock.calls[6][0]).toContain("983 bytes ");
-      expect(winston.info.mock.calls[7][0]).toContain("<style>");
-      expect(winston.info.mock.calls[7][0]).toContain("0 bytes ");
+      expect(logger.mock.calls[4][0]).toContain("[Compiled] fixtures/TestComponentWithoutStyle.vue");
+      expect(logger.mock.calls[5][0]).toContain("<template>");
+      expect(logger.mock.calls[5][0]).toContain("519 bytes ");
+      expect(logger.mock.calls[6][0]).toContain("<script>");
+      expect(logger.mock.calls[6][0]).toContain("983 bytes ");
+      expect(logger.mock.calls[7][0]).toContain("<style>");
+      expect(logger.mock.calls[7][0]).toContain("0 bytes ");
 
-      expect(winston.info.mock.calls[8][0]).toContain("Total all of .vue file:");
-      expect(winston.info.mock.calls[9][0]).toContain("<template>");
-      expect(winston.info.mock.calls[9][0]).toContain("1026 bytes ");
-      expect(winston.info.mock.calls[10][0]).toContain("<script>");
-      expect(winston.info.mock.calls[10][0]).toContain("1880 bytes ");
-      expect(winston.info.mock.calls[11][0]).toContain("<style>");
-      expect(winston.info.mock.calls[11][0]).toContain("1900 bytes ");
+      expect(logger.mock.calls[8][0]).toContain("Total all of .vue file:");
+      expect(logger.mock.calls[9][0]).toContain("<template>");
+      expect(logger.mock.calls[9][0]).toContain("1026 bytes ");
+      expect(logger.mock.calls[10][0]).toContain("<script>");
+      expect(logger.mock.calls[10][0]).toContain("1880 bytes ");
+      expect(logger.mock.calls[11][0]).toContain("<style>");
+      expect(logger.mock.calls[11][0]).toContain("1900 bytes ");
     });
   });
 });

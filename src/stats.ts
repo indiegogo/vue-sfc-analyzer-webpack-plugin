@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as mkdir from "mkdirp";
 import chalk from "chalk";
-import winston from "winston";
+const winston = require('winston');
 
 import { VueSFCAnalyzerRecords } from "./VueSFCAnalyzerWebpackPlugin";
 
