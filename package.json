@@ -33,7 +33,7 @@
     "@types/jest": "^22.2.0",
     "@types/mkdirp": "^0.5.2",
     "@types/node": "^9.4.7",
-    "@types/webpack": "^3.8.4",
+    "@types/webpack": "^3.8.11",
     "@types/winston": "^2.3.8",
     "chalk": "^2.3.2",
     "mkdirp": "^0.5.1",
