@@ -11,28 +11,32 @@ exports.dump = function (filePath, records) {
     winston.info(chalk_1.default.bold("WebpackVueSFCAnalyzerPlugin saved stats file to " + filePath));
 };
 exports.show = function (records) {
+    Object.keys(records).forEach(function (filePath) {
+        var templateSize = records[filePath].template.size;
+        var scriptSize = records[filePath].script.size;
+        var styleSize = records[filePath].style.size;
+        winston.info(chalk_1.default.underline(chalk_1.default.green("[Compiled] " + filePath + ":")));
+        presentEachSection({ template: templateSize, script: scriptSize, style: styleSize });
+    });
+};
+exports.total = function (records) {
     var whole = {
         template: 0,
         script: 0,
         style: 0
     };
     Object.keys(records).forEach(function (filePath) {
-        var templateSize = records[filePath].template.size;
-        var scriptSize = records[filePath].script.size;
-        var styleSize = records[filePath].style.size;
-        var total = templateSize + scriptSize + styleSize;
-        whole.template += templateSize;
-        whole.script += scriptSize;
-        whole.style += styleSize;
-        winston.info(chalk_1.default.underline(chalk_1.default.green("[Compiled] " + filePath + ":")));
-        winston.info("  " + chalk_1.default.redBright("<template>") + ": " + templateSize + " bytes (" + Math.round(templateSize / total * 100) + "%)");
-        winston.info("  " + chalk_1.default.blueBright("<script>") + "  : " + scriptSize + " bytes (" + Math.round(scriptSize / total * 100) + "%)");
-        winston.info("  " + chalk_1.default.magentaBright("<style>") + "   : " + styleSize + " bytes (" + Math.round(styleSize / total * 100) + "%)");
+        whole.template += records[filePath].template.size;
+        whole.script += records[filePath].script.size;
+        whole.style += records[filePath].style.size;
     });
-    var wholeTotal = whole.template + whole.script + whole.style;
     winston.info(chalk_1.default.underline("Total all of .vue file:"));
-    winston.info("  " + chalk_1.default.redBright("<template>") + ": " + whole.template + " bytes (" + Math.round(whole.template / wholeTotal * 100) + "%)");
-    winston.info("  " + chalk_1.default.blueBright("<script>") + "  : " + whole.script + " bytes (" + Math.round(whole.template / wholeTotal * 100) + "%)");
-    winston.info("  " + chalk_1.default.magentaBright("<style>") + "   : " + whole.style + " bytes (" + Math.round(whole.style / wholeTotal * 100) + "%)");
+    presentEachSection(whole);
+};
+var presentEachSection = function (analysis) {
+    var total = analysis.template + analysis.script + analysis.style;
+    winston.info("  " + chalk_1.default.redBright("<template>") + ": " + analysis.template + " bytes (" + Math.round(analysis.template / total * 100 * 10) / 10 + "%)");
+    winston.info("  " + chalk_1.default.blueBright("<script>") + "  : " + analysis.script + " bytes (" + Math.round(analysis.script / total * 100 * 10) / 10 + "%)");
+    winston.info("  " + chalk_1.default.magentaBright("<style>") + "   : " + analysis.style + " bytes (" + Math.round(analysis.style / total * 100 * 10) / 10 + "%)");
 };
 //# sourceMappingURL=stats.js.map

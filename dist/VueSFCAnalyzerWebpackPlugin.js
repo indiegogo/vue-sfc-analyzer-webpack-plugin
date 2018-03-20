@@ -38,6 +38,7 @@ var VueSFCAnalyzerWebpackPlugin = /** @class */ (function () {
         });
         compiler.plugin("done", function () {
             if (_this.opts.showSummary) {
+                stats_1.total(_this.records);
                 stats_1.show(_this.records);
             }
             if (_this.opts.statsFilename) {
