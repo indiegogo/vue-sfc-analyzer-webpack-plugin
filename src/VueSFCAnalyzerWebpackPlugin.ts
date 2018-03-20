@@ -3,7 +3,7 @@ import { Compiler } from "webpack";
 const winston = require('winston');
 
 import { sectionByPortableId, vueFilePathByPortableId } from "./webpackUtils";
-import { show, dump } from "./stats";
+import { show, total, dump } from "./stats";
 
 winston.configure({
   level: process.env.NODE_ENV === "test" ? "warning" : "info",
@@ -62,6 +62,7 @@ class VueSFCAnalyzerWebpackPlugin {
 
     compiler.plugin("done", () => {
       if (this.opts.showSummary) {
+        total(this.records);
         show(this.records);
       }
 

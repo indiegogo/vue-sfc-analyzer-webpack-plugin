@@ -1,4 +1,4 @@
-import { dump, show } from "../src/stats";
+import { dump, show, total } from "../src/stats";
 import fs from "fs";
 import winston from "winston";
 
@@ -63,27 +63,43 @@ describe("stats", () => {
       expect(logger.mock.calls[0][0]).toContain("[Compiled] fixtures/TestComponent.vue");
       expect(logger.mock.calls[1][0]).toContain("<template>");
       expect(logger.mock.calls[1][0]).toContain("507 bytes ");
+      expect(logger.mock.calls[1][0]).toContain("15.3%");
       expect(logger.mock.calls[2][0]).toContain("<script>");
       expect(logger.mock.calls[2][0]).toContain("897 bytes ");
+      expect(logger.mock.calls[2][0]).toContain("27.1%");
       expect(logger.mock.calls[3][0]).toContain("<style>");
       expect(logger.mock.calls[3][0]).toContain("1900 bytes ");
+      expect(logger.mock.calls[3][0]).toContain("57.5%");
 
       expect(logger.mock.calls[4][0]).toContain("[Compiled] fixtures/TestComponentWithoutStyle.vue");
       expect(logger.mock.calls[5][0]).toContain("<template>");
       expect(logger.mock.calls[5][0]).toContain("519 bytes ");
+      expect(logger.mock.calls[5][0]).toContain("34.6%");
       expect(logger.mock.calls[6][0]).toContain("<script>");
       expect(logger.mock.calls[6][0]).toContain("983 bytes ");
+      expect(logger.mock.calls[6][0]).toContain("65.4%");
       expect(logger.mock.calls[7][0]).toContain("<style>");
       expect(logger.mock.calls[7][0]).toContain("0 bytes ");
+      expect(logger.mock.calls[7][0]).toContain("0%");
+    });
+  });
 
-      expect(logger.mock.calls[8][0]).toContain("Total all of .vue file:");
-      expect(logger.mock.calls[9][0]).toContain("<template>");
-      expect(logger.mock.calls[9][0]).toContain("1026 bytes ");
-      expect(logger.mock.calls[10][0]).toContain("<script>");
-      expect(logger.mock.calls[10][0]).toContain("1880 bytes ");
-      expect(logger.mock.calls[11][0]).toContain("<style>");
-      expect(logger.mock.calls[11][0]).toContain("1900 bytes ");
+  describe("total", () => {
+    it("shows total values", () => {
+      const logger = jest.fn();
+      winston.info = logger;
+      total(sampleRecords);
+
+      expect(logger.mock.calls[0][0]).toContain("Total all of .vue file:");
+      expect(logger.mock.calls[1][0]).toContain("<template>");
+      expect(logger.mock.calls[1][0]).toContain("1026 bytes ");
+      expect(logger.mock.calls[1][0]).toContain("21.3%");
+      expect(logger.mock.calls[2][0]).toContain("<script>");
+      expect(logger.mock.calls[2][0]).toContain("1880 bytes ");
+      expect(logger.mock.calls[2][0]).toContain("39.1%");
+      expect(logger.mock.calls[3][0]).toContain("<style>");
+      expect(logger.mock.calls[3][0]).toContain("1900 bytes ");
+      expect(logger.mock.calls[3][0]).toContain("39.5%");
     });
   });
 });
-
