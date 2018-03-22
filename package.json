@@ -1,6 +1,6 @@
 {
   "name": "vue-sfc-analyzer-webpack-plugin",
-  "version": "0.0.1",
+  "version": "1.0.0-beta.1",
   "description": "Webpack plugin for analyzing Vue SFC",
   "main": "dist/VueSFCAnalyzerWebpackPlugin.js",
   "typings": "dist/types/VueSFCAnalyzerWebpackPlugin.d.ts",
@@ -24,7 +24,7 @@
     "plugin",
     "vue"
   ],
-  "author": "Kengo Hamasaki <kengo@indiegogo.com>",
+  "author": "Indiegogo, Inc.",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/indiegogo/webpack-vue-sfc-analyzer-plugin/issues"
