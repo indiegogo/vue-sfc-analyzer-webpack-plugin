@@ -1,8 +1,8 @@
 # VueSFCAnalyzerWebpackPlugin
 
 
-![CircleCI](https://img.shields.io/circleci/project/github/indiegogo/vue-sfc-analyzer-webpack-plugin.svg?style=flat-square)
-![npm](https://img.shields.io/npm/v/vue-sfc-analyzer-webpack-plugin.svg?style=flat-square)
+[![CircleCI](https://img.shields.io/circleci/project/github/indiegogo/vue-sfc-analyzer-webpack-plugin.svg?style=flat-square)](https://circleci.com/gh/indiegogo/vue-sfc-analyzer-webpack-plugin/tree/master)
+[![npm](https://img.shields.io/npm/v/vue-sfc-analyzer-webpack-plugin.svg?style=flat-square)](https://www.npmjs.com/package/vue-sfc-analyzer-webpack-plugin)
 
 WebPack plugin that analyze Vue SFC `.vue` files which are loaded by vue-loader
 
