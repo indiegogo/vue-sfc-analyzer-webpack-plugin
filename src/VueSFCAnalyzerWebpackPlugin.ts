@@ -5,6 +5,8 @@ const winston = require('winston');
 import { sectionByPortableId, vueFilePathByPortableId } from "./webpackUtils";
 import { show, total, dump } from "./stats";
 
+const pluginName = 'VueSFCAnalyzerWebpackPlugin';
+
 winston.configure({
   level: process.env.NODE_ENV === "test" ? "warning" : "info",
   transports: [
@@ -53,22 +55,84 @@ class VueSFCAnalyzerWebpackPlugin {
 
   apply (compiler: Compiler) {
     winston.info("WebpackVueSFCAnalyzerPlugin is Enabled");
-    compiler.plugin("emit", (compilation, callback) => {
-      compilation.chunks.forEach((chunk) => {
-        chunk.forEachModule(this.recordSFCStats.bind(this));
-      });
-      callback();
+    // console.log("compiler:", compiler);
+    console.log('COMPILER');
+    // compiler.hooks.emit.tapAsync(pluginName, (compilation, callback) => {
+      // this.buildAssets(compilation);
+    //   callback();
+    // });
+
+    compiler.hooks.run.tap(pluginName, compilation => {
+        console.log("The webpack build process is starting!!!");
     });
 
-    compiler.plugin("done", () => {
-      if (this.opts.showSummary) {
-        total(this.records);
-        show(this.records);
-      }
+    compiler.hooks.failed.tap(pluginName, error => {
+        console.log("The webpack build process has failed!!!", error);
+    });
 
-      if (this.opts.statsFilename) {
-        dump(this.opts.statsFilename, this.records);
-      }
+    compiler.hooks.invalid.tap(pluginName, (fileName, changeTime) => {
+        console.log("The webpack build process is invalid!!!", fileName, changeTime);
+    });
+
+    compiler.hooks.emit.tapAsync(pluginName, (compilation, callback) => {
+        console.log("The webpack build emit event is thrown!!!");
+        this.buildAssets(compilation);
+        callback();
+    });
+
+    compiler.hooks.afterEmit.tap(pluginName, compilation => {
+        console.log("The webpack build afterEmit event is thrown!!!");
+    });
+
+    compiler.hooks.afterEmit.tap(pluginName, compilation => {
+        console.log("The webpack build afterEmit event is thrown!!!");
+        this.buildAssets(compilation);
+    });
+
+    // compiler.hooks.done.tap(pluginName, compilation => {
+    //     console.log("The webpack build done event is thrown!!!");
+    //     // console.log("done - compilation:", compilation);
+    //     this.buildAssets(compilation);
+    // });
+
+    compiler.hooks.done.tap(pluginName, compilation => {
+        console.log("The webpack build done event is thrown!!!");
+        // console.log("done - compilation:", compilation);
+        // this.buildAssets(compilation);
+        if (this.opts.showSummary) {
+          total(this.records);
+          show(this.records);
+        }
+
+        if (this.opts.statsFilename) {
+          dump(this.opts.statsFilename, this.records);
+        }
+    });
+
+    // compiler.hooks.emit.tap(pluginName, (compilation, callback) => {
+    //   this.buildAssets(compilation);
+    //   callback();
+    // });
+
+    // compiler.plugin("emit", (compilation, callback) => {
+    //   console.log("compilation:", compilation);
+    //   compilation.chunks.forEach((chunk) => {
+    //     console.log("chunk:", chunk);
+    //     chunk.forEachModule(this.recordSFCStats.bind(this));
+    //   });
+    //   callback();
+    // });
+
+    // compiler.plugin("done", () => {
+    //
+    // });
+  }
+
+  private buildAssets(compilation) {
+    console.log("compilation.chunks:", compilation.chunks)
+    compilation.chunks.forEach((chunk) => {
+      console.log("chunk:", chunk);
+      chunk.forEachModule(this.recordSFCStats.bind(this));
     });
   }
 
