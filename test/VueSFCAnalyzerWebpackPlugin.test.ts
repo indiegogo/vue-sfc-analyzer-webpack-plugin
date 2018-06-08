@@ -1,5 +1,4 @@
 
-
 const webpack = require("webpack");
 const path = require("path");
 const fs = require("fs");
@@ -63,7 +62,7 @@ describe("with Webpack", () => {
 
   const webpackOption = (plugin) => {
     return {
-      mode: "production",
+      mode: "development",
       entry: {
         app: path.resolve(__dirname, "./fixtures/source.ts")
       },
@@ -100,8 +99,8 @@ describe("with Webpack", () => {
     let plugin;
 
     const recordFor = (sfcFileName) => {
-      console.log("plugin.records:", plugin.records);
-      return plugin.records[`test/fixtures/${sfcFileName}`];
+      const filepath = path.resolve(process.cwd(), `test/fixtures/${sfcFileName}`);
+      return plugin.records[filepath];
     };
 
     beforeEach(() => {
@@ -112,8 +111,6 @@ describe("with Webpack", () => {
 
     it.only("should record result of the basic component (TestComponent.vue)", (done) => {
       webpack(webpackOption(plugin)).run((err, stats) => {
-        console.log("err", err);
-        console.log("stats", stats);
         const record = recordFor("TestComponent.vue");
         expect(record.template.size).toBeGreaterThan(0);
         expect(record.template.source.length).toBeGreaterThan(0);
