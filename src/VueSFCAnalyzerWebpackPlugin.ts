@@ -1,9 +1,22 @@
+// ***********************
+// * Libraries & Plugins *
+// ***********************
+
 import * as path from 'path';
 import { Compiler } from "webpack";
 const winston = require('winston');
 
+// ********************
+// * Relative Imports *
+// ********************
+
 import { sectionByPortableId, vueFilePathByPortableId } from "./webpackUtils";
 import { show, total, dump } from "./stats";
+
+
+// *************
+// * Constants *
+// *************
 
 const pluginName = 'VueSFCAnalyzerWebpackPlugin';
 
@@ -57,7 +70,6 @@ class VueSFCAnalyzerWebpackPlugin {
     winston.info("WebpackVueSFCAnalyzerPlugin is Enabled");
     compiler.hooks.emit.tapAsync(pluginName, (compilation, callback) => {
       this.buildAssets(compilation);
-
       callback();
     });
 
