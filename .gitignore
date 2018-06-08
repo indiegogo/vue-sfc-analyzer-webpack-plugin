@@ -58,4 +58,3 @@ typings/
 .env
 
 test/fixtures/output.js
-dist/
