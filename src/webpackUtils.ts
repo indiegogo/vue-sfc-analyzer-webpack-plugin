@@ -8,10 +8,10 @@ import { VueSFCAnalyzerRecord } from "./VueSFCAnalyzerWebpackPlugin";
 // * Constants *
 // *************
 
-const VUE_FILE_REGEX = /.*vue-loader-options!([\w\-_/]+\.vue)\?.*$/
-const VUE_FILE_TEMPLATE_REGEX = /.*vue-loader-options!([\w\-_/]+\.vue)\?vue&type=template.*$/
-const VUE_FILE_SCRIPT_REGEX = /.*vue-loader-options!([\w\-_/]+\.vue)\?vue&type=script.*$/
-const VUE_FILE_STYLE_REGEX = /.*vue-loader-options!([\w\-_/]+\.vue)\?vue&type=style.*$/
+const VUE_FILE_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?.*$/
+const VUE_FILE_TEMPLATE_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?vue&type=template.*$/
+const VUE_FILE_SCRIPT_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?vue&type=script.*$/
+const VUE_FILE_STYLE_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?vue&type=style.*$/
 
 export const sectionByPortableId = (module: any): keyof VueSFCAnalyzerRecord | void => {
   const portableId = module.request;
