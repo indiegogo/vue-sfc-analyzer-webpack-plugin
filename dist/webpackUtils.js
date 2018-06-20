@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // *************
 // * Constants *
 // *************
-var VUE_FILE_REGEX = /.*vue-loader-options!([\w\-_/]+\.vue)\?.*$/;
-var VUE_FILE_TEMPLATE_REGEX = /.*vue-loader-options!([\w\-_/]+\.vue)\?vue&type=template.*$/;
-var VUE_FILE_SCRIPT_REGEX = /.*vue-loader-options!([\w\-_/]+\.vue)\?vue&type=script.*$/;
-var VUE_FILE_STYLE_REGEX = /.*vue-loader-options!([\w\-_/]+\.vue)\?vue&type=style.*$/;
+var VUE_FILE_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?.*$/;
+var VUE_FILE_TEMPLATE_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?vue&type=template.*$/;
+var VUE_FILE_SCRIPT_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?vue&type=script.*$/;
+var VUE_FILE_STYLE_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?vue&type=style.*$/;
 exports.sectionByPortableId = function (module) {
     var portableId = module.request;
     if (portableId === undefined) {
