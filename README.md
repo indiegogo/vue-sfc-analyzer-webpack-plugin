@@ -42,6 +42,19 @@ config.plugins.push(new VueSFCAnalyzerWebpackPlugin({
 
 ```
 
+When you run on production build (production mode on Webpack 4), `ModuleConcatenationPlugin` may avoid to calculate sizes for `<script>`, `<template>`.
+Then you can disable the plugin with:
+
+```js
+module.exports = {
+  ...
+  optimization: {
+    concatenateModules: false
+  }
+  ...
+}
+```
+
 ## Option
 
 ```ts
