@@ -10,8 +10,8 @@ WebPack plugin that analyze Vue SFC `.vue` files which are loaded by vue-loader
 
 ## Requirements
 
-- Webpack 3
-  - v4 will be supported soon
+- Webpack 4
+- vue-loader 15+
 
 ## Installation
 
@@ -40,6 +40,19 @@ config.plugins.push(new VueSFCAnalyzerWebpackPlugin({
 
 ...
 
+```
+
+When you run a production build (production mode on Webpack 4), `ModuleConcatenationPlugin` may not calculate sizes for `<script>` and `<template>`.
+Then you can disable the plugin with:
+
+```js
+module.exports = {
+  ...
+  optimization: {
+    concatenateModules: false
+  }
+  ...
+}
 ```
 
 ## Option

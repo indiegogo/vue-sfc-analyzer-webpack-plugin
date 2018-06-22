@@ -1,11 +1,11 @@
 {
   "name": "vue-sfc-analyzer-webpack-plugin",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0",
   "description": "Webpack plugin for analyzing Vue SFC",
   "main": "dist/VueSFCAnalyzerWebpackPlugin.js",
   "typings": "dist/types/VueSFCAnalyzerWebpackPlugin.d.ts",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=6.11.5"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
