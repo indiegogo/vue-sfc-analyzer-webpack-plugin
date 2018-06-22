@@ -10,8 +10,8 @@ WebPack plugin that analyze Vue SFC `.vue` files which are loaded by vue-loader
 
 ## Requirements
 
-- Webpack 3
-  - v4 will be supported soon
+- Webpack 4
+- vue-loader 15+
 
 ## Installation
 
