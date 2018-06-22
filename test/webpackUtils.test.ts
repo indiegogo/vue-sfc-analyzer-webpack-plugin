@@ -4,49 +4,49 @@ describe("webpackUtils", () => {
   describe("sectionByPortableId", () => {
     it("determines <script>", () => {
       const result = sectionByPortableId({
-        portableId: "node_modules/vue-loader/lib/selector.js?type=script&index=0!test/fixtures/TestComponentJS.vue"
+        request: "node_modules/vue-loader/lib/index.js??vue-loader-options!test/fixtures/TestComponentJS.vue?vue&type=script&id=d235d5ce"
       });
       expect(result).toEqual("script");
     });
 
     it("determines <script lang='ts'>", () => {
       const result = sectionByPortableId({
-        portableId: "node_modules/ts-loader/index.js!node_modules/vue-loader/lib/selector.js?type=script&index=0!test/fixtures/TestComponent.vue"
+        request: "node_modules/vue-loader/lib/index.js??vue-loader-options!test/fixtures/TestComponent.vue?vue&type=script&id=d235d5ce"
       });
       expect(result).toEqual("script");
     });
 
     it("determines <style> by vue-style-loader", () => {
       const result = sectionByPortableId({
-        portableId: 'node_modules/vue-style-loader/index.js!node_modules/css-loader/index.js!node_modules/vue-loader/lib/style-compiler/index.js?{"optionsId":"0","vue":true,"id":"data-v-f14a96a4","scoped":true,"sourceMap":false}!node_modules/vue-loader/lib/selector.js?type=styles&index=0!test/fixtures/TestComponentJS.vue'
+        request: 'node_modules/vue-loader/lib/index.js??vue-loader-options!test/fixtures/TestComponentJS.vue?vue&type=style&index=0&id=2e494b62&scoped=true&lang=css'
       });
       expect(result).toEqual("style");
     });
 
     it("determines <style> by css-loader", () => {
       const result = sectionByPortableId({
-        portableId: 'node_modules/css-loader/index.js!node_modules/vue-loader/lib/style-compiler/index.js?{"optionsId":"0","vue":true,"id":"data-v-f14a96a4","scoped":true,"sourceMap":false}!node_modules/vue-loader/lib/selector.js?type=styles&index=0!test/fixtures/TestComponentJS.vue'
+        request: 'node_modules/vue-loader/lib/index.js??vue-loader-options!test/fixtures/TestComponentJS.vue?vue&type=style&index=0&id=2e494b62&scoped=true&lang=css'
       });
       expect(result).toEqual("style");
     });
 
     it("determines <template>", () => {
       const result = sectionByPortableId({
-        portableId: 'node_modules/vue-loader/lib/template-compiler/index.js?{"id":"data-v-894531b6","hasScoped":true,"optionsId":"0","buble":{"transforms":{}}}!node_modules/vue-loader/lib/selector.js?type=template&index=0!test/fixtures/TestComponent.vue'
+        request: 'node_modules/vue-loader/lib/index.js??vue-loader-options!test/fixtures/TestComponentJS.vue?vue&type=template&index=0&id=2e494b62'
       });
       expect(result).toEqual("template");
     });
 
     it("doesn't return section name if unknown loader is opening .vue file", () => {
       const result = sectionByPortableId({
-        portableId: "node_modules/unknown-loader/lib/selector.js?type=template&index=0!./EmailSignup.vue"
+        request: "node_modules/unknown-loader/lib/selector.js?type=template&index=0!./EmailSignup.vue"
       });
       expect(result).toBeUndefined();
     });
 
     it("doesn't return section name if the module is by top-level of vue-loader", () => {
       const result = sectionByPortableId({
-        portableId: "node_modules/vue-loader/index.js!test/fixtures/TestComponentWithMultipleStyles.vue"
+        request: "node_modules/vue-loader/index.js!test/fixtures/TestComponentWithMultipleStyles.vue"
       });
       expect(result).toBeUndefined();
     });
@@ -54,12 +54,12 @@ describe("webpackUtils", () => {
 
   describe("vueFilePathByPortable", () => {
     it("returns file path for .vue file", () => {
-      const result = vueFilePathByPortableId("node_modules/unknown-loader/dist/index.js!node_modules/vue-loader/lib/selector.js?type=template&index=0!./fixtures/somewhere/EmailSignup.vue")
+      const result = vueFilePathByPortableId("node_modules/unknown-loader/dist/index.js!node_modules/vue-loader/lib/index.js??vue-loader-options!/fixtures/somewhere/EmailSignup.vue?vue&type=template&index=0&id=2e494b62")
       expect(result).toEqual("/fixtures/somewhere/EmailSignup.vue");
     });
 
     it("return null portableId is not for .vue file", () => {
-      const result = vueFilePathByPortableId("node_modules/unknown-loader/dist/index.js!node_modules/vue-loader/lib/selector.js?type=template&index=0!./fixtures/somewhere/EmailSignup.ts")
+      const result = vueFilePathByPortableId("node_modules/unknown-loader/dist/index.js!node_modules/vue-loader/lib/index.js??vue-loader-options!test/fixtures/somewhere/EmailSignup.ts?vue&type=template&index=0&id=2e494b62")
       expect(result).toBeNull();
     });
   });

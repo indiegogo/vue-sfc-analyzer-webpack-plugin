@@ -1,9 +1,24 @@
+// ***********************
+// * Libraries & Plugins *
+// ***********************
+
 import * as path from 'path';
 import { Compiler } from "webpack";
 const winston = require('winston');
 
+// ********************
+// * Relative Imports *
+// ********************
+
 import { sectionByPortableId, vueFilePathByPortableId } from "./webpackUtils";
 import { show, total, dump } from "./stats";
+
+
+// *************
+// * Constants *
+// *************
+
+const pluginName = 'VueSFCAnalyzerWebpackPlugin';
 
 winston.configure({
   level: process.env.NODE_ENV === "test" ? "warning" : "info",
@@ -53,29 +68,35 @@ class VueSFCAnalyzerWebpackPlugin {
 
   apply (compiler: Compiler) {
     winston.info("WebpackVueSFCAnalyzerPlugin is Enabled");
-    compiler.plugin("emit", (compilation, callback) => {
-      compilation.chunks.forEach((chunk) => {
-        chunk.forEachModule(this.recordSFCStats.bind(this));
-      });
+    compiler.hooks.emit.tapAsync(pluginName, (compilation, callback) => {
+      this.buildAssets(compilation);
       callback();
     });
 
-    compiler.plugin("done", () => {
-      if (this.opts.showSummary) {
-        total(this.records);
-        show(this.records);
-      }
+    compiler.hooks.done.tap(pluginName, compilation => {
+        if (this.opts.showSummary) {
+          total(this.records);
+          show(this.records);
+        }
 
-      if (this.opts.statsFilename) {
-        dump(this.opts.statsFilename, this.records);
-      }
+        if (this.opts.statsFilename) {
+          dump(this.opts.statsFilename, this.records);
+        }
+    });
+  }
+
+  private buildAssets(compilation) {
+    compilation.chunks.forEach((chunk) => {
+      chunk.forEachModule(this.recordSFCStats.bind(this));
     });
   }
 
   private recordSFCStats (module) {
     const section = sectionByPortableId(module);
+
     if (section) {
-      const filePath = vueFilePathByPortableId(module.portableId) as string;
+      const portableId = module.request;
+      const filePath = vueFilePathByPortableId(portableId) as string;
       this.constructRecord(filePath);
       this.storeSource(filePath, module._source._value, section);
     }

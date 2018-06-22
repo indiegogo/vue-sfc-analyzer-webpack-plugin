@@ -1,7 +1,11 @@
+
+const webpack = require("webpack");
+const path = require("path");
+const fs = require("fs");
+
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 import Plugin, { VueSFCAnalyzerWebpackPluginOption } from "../src/VueSFCAnalyzerWebpackPlugin";
-import webpack from "webpack";
-import path from "path";
-import fs from "fs";
 
 describe("VueSFCAnalyzerWebpackPlugin", () => {
   describe("options", () => {
@@ -58,6 +62,7 @@ describe("with Webpack", () => {
 
   const webpackOption = (plugin) => {
     return {
+      mode: "development",
       entry: {
         app: path.resolve(__dirname, "./fixtures/source.ts")
       },
@@ -65,7 +70,10 @@ describe("with Webpack", () => {
         path: path.resolve(__dirname, "./fixtures"),
         filename: "output.js"
       },
-      plugins: [plugin],
+      plugins: [
+        plugin,
+        new VueLoaderPlugin()
+      ],
       module: {
         rules: [
           {
@@ -75,14 +83,14 @@ describe("with Webpack", () => {
           {
             test: /\.ts$/,
             loader: "ts-loader",
-            options: {
-              appendTsSuffixTo: [/\.vue$/]
-            }
-          },
+            exclude: /node_modules/,
+            options: { appendTsSuffixTo: [/\.vue$/], transpileOnly: true }
+          }
         ]
       },
       resolve: {
-        extensions: [".ts", ".js", ".vue"]
+        extensions: [".ts", ".js", ".vue"],
+        alias: { "~": path.resolve(__dirname, "./fixtures") }
       }
     }
   };
@@ -91,7 +99,8 @@ describe("with Webpack", () => {
     let plugin;
 
     const recordFor = (sfcFileName) => {
-      return plugin.records[`test/fixtures/${sfcFileName}`];
+      const filepath = path.resolve(process.cwd(), `test/fixtures/${sfcFileName}`);
+      return plugin.records[filepath];
     };
 
     beforeEach(() => {
@@ -100,7 +109,7 @@ describe("with Webpack", () => {
       });
     });
 
-    it("should record result of the basic component (TestComponent.vue)", (done) => {
+    it.only("should record result of the basic component (TestComponent.vue)", (done) => {
       webpack(webpackOption(plugin)).run((err, stats) => {
         const record = recordFor("TestComponent.vue");
         expect(record.template.size).toBeGreaterThan(0);

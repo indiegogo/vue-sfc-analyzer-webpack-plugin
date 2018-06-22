@@ -1,20 +1,36 @@
+// ***********************
+// * Libraries & Plugins *
+// ***********************
+
 import { VueSFCAnalyzerRecord } from "./VueSFCAnalyzerWebpackPlugin";
 
+// *************
+// * Constants *
+// *************
+
+const VUE_FILE_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?.*$/
+const VUE_FILE_TEMPLATE_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?vue&type=template.*$/
+const VUE_FILE_SCRIPT_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?vue&type=script.*$/
+const VUE_FILE_STYLE_REGEX = /.*vue-loader-options!([\w\-_\.\s/]+\.vue)\?vue&type=style.*$/
+
 export const sectionByPortableId = (module: any): keyof VueSFCAnalyzerRecord | void => {
-  const { portableId } = module;
-  if (vueFilePathByPortableId(portableId)) {
-    // Should parse loader ideally, and not support pure JS of <script> yet
-    if (portableId.match(/\/vue-loader\/lib\/selector\.js\?type=template&index=\d!([\w\-_/\.]+\.vue)$/)) {
+  const portableId = module.request;
+  if(portableId === undefined) {
+    return
+  }
+  const filename = vueFilePathByPortableId(portableId);
+  if (filename) {
+    if (portableId.match(VUE_FILE_TEMPLATE_REGEX)) {
       return "template";
-    } else if (portableId.match(/\/vue-loader\/lib\/selector\.js\?type=script&index=\d!([\w\-_/\.]+\.vue)$/)) {
+    } else if (portableId.match(VUE_FILE_SCRIPT_REGEX)) {
       return "script";
-    } else if (portableId.match(/\/vue-loader\/lib\/selector\.js\?type=styles&index=\d!([\w\-_/\.]+\.vue)$/)) {
+    } else if (portableId.match(VUE_FILE_STYLE_REGEX)) {
       return "style";
     }
   }
 }
 
 export const vueFilePathByPortableId = (portableId: string): string | null => {
-  const matched = portableId.match(/([\w\-_/]+\.vue)$/);
+  const matched = portableId.match(VUE_FILE_REGEX);
   return matched && matched[1];
 }
