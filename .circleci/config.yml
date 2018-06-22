@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: node:6
+      - image: node:8
     steps:
       - checkout
 
