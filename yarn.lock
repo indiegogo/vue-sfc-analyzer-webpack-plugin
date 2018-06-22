@@ -40,9 +40,9 @@
   dependencies:
     source-map "^0.6.1"
 
-"@types/webpack@^4.4.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.4.0.tgz#c0551b772be241d786c0548812dd75a932f8efb4"
+"@types/webpack@^4.4.2":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.4.2.tgz#44213e0dca0924544a2831ee42de2750124ef9b5"
   dependencies:
     "@types/node" "*"
     "@types/tapable" "*"
@@ -4837,9 +4837,9 @@ ts-jest@^22.4.1:
     pkg-dir "^2.0.0"
     yargs "^11.0.0"
 
-ts-loader@^4.3.0:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-4.3.1.tgz#345298df9a5019be7a3e86cd7b8b1aefef4bbd79"
+ts-loader@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-4.4.1.tgz#c93a46eea430ebce1f790dfe438caefb8670d365"
   dependencies:
     chalk "^2.3.0"
     enhanced-resolve "^4.0.0"
@@ -5057,7 +5057,7 @@ vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
 
-vue@^2.5.15:
+vue@^2.5.16:
   version "2.5.16"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.16.tgz#07edb75e8412aaeed871ebafa99f4672584a0085"
 
