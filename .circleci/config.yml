@@ -1,14 +1,16 @@
 version: 2
 jobs:
-  test:
+  test_with_node6: &test_with_node6
     docker:
-      - image: node:8
+      - image: node:6
+        environment:
+          NODE_VERSION: 6
     steps:
       - checkout
 
       - restore_cache:
           keys:
-            - yarn-{{ checksum "yarn.lock" }}
+            - yarn-{{ checksum "yarn.lock" }}-{{ .Environment.NODE_VERSION }}
             - yarn-
 
       - run:
@@ -20,12 +22,28 @@ jobs:
           command: yarn test
 
       - save_cache:
-          key: yarn-{{ checksum "yarn.lock" }}
+          key: yarn-{{ checksum "yarn.lock" }}-{{ .Environment.NODE_VERSION }}
           paths:
             - ~/.cache/yarn
+
+  test_with_node8:
+    <<: *test_with_node6
+    docker:
+      - image: node:8
+        environment:
+          NODE_VERSION: 8
+
+  test_with_node9:
+    <<: *test_with_node6
+    docker:
+      - image: node:9
+        environment:
+          NODE_VERSION: 9
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - test
+      - test_with_node6
+      - test_with_node8
+      - test_with_node9
