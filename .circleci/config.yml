@@ -2,7 +2,7 @@ version: 2
 jobs:
   test_with_node6: &test_with_node6
     docker:
-      - image: node:6
+      - image: circleci/node:6
         environment:
           NODE_VERSION: 6
     steps:
@@ -29,16 +29,16 @@ jobs:
   test_with_node8:
     <<: *test_with_node6
     docker:
-      - image: node:8
+      - image: circleci/node:8
         environment:
           NODE_VERSION: 8
 
-  test_with_node9:
+  test_with_node10:
     <<: *test_with_node6
     docker:
-      - image: node:9
+      - image: circleci/node:10
         environment:
-          NODE_VERSION: 9
+          NODE_VERSION: 10
 
 workflows:
   version: 2
@@ -46,4 +46,4 @@ workflows:
     jobs:
       - test_with_node6
       - test_with_node8
-      - test_with_node9
+      - test_with_node10
