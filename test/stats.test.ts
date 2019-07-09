@@ -1,9 +1,9 @@
 import { dump, show, total } from "../src/stats";
-import fs from "fs";
-import winston from "winston";
+import * as fs from "fs";
+const winston = require("winston");
 
 const mockFs = jest.genMockFromModule("fs");
-mockFs["writeFileSync"] = jest.fn();
+(mockFs as any).writeFileSync = jest.fn();
 jest.mock("fs");
 
 describe("stats", () => {
