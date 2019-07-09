@@ -4,12 +4,12 @@
 
 import * as path from 'path';
 import { Compiler } from "webpack";
-const winston = require('winston');
 
 // ********************
 // * Relative Imports *
 // ********************
 
+import logger from "./logger";
 import { sectionByPortableId, vueFilePathByPortableId } from "./webpackUtils";
 import { show, total, dump } from "./stats";
 
@@ -19,16 +19,6 @@ import { show, total, dump } from "./stats";
 // *************
 
 const pluginName = 'VueSFCAnalyzerWebpackPlugin';
-
-winston.configure({
-  level: process.env.NODE_ENV === "test" ? "warning" : "info",
-  transports: [
-    new winston.transports.Console({
-      colorize: true,
-      showLevel: false
-    })
-  ]
-});
 
 export interface VueSFCAnalyzerRecord {
   template: {
@@ -67,7 +57,7 @@ class VueSFCAnalyzerWebpackPlugin {
   }
 
   apply (compiler: Compiler) {
-    winston.info("WebpackVueSFCAnalyzerPlugin is Enabled");
+    logger.info("WebpackVueSFCAnalyzerPlugin is Enabled");
     compiler.hooks.emit.tapAsync(pluginName, (compilation, callback) => {
       this.buildAssets(compilation);
       callback();

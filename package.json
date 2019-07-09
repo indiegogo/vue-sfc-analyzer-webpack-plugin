@@ -32,14 +32,13 @@
   "dependencies": {
     "chalk": "^2.3.2",
     "mkdirp": "^0.5.1",
-    "winston": "^2.4.1"
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/jest": "24.0.15",
     "@types/mkdirp": "0.5.2",
     "@types/node": "12.6.1",
     "@types/webpack": "4.4.34",
-    "@types/winston": "^2.3.8",
     "css-loader": "3.0.0",
     "jest": "24.8.0",
     "ts-jest": "24.0.2",
