@@ -1,10 +1,10 @@
 version: 2
 jobs:
-  test_with_node6: &test_with_node6
+  test_with_node8: &test_with_node8
     docker:
-      - image: circleci/node:6
+      - image: circleci/node:8
         environment:
-          NODE_VERSION: 6
+          NODE_VERSION: 8
     steps:
       - checkout
 
@@ -26,15 +26,8 @@ jobs:
           paths:
             - ~/.cache/yarn
 
-  test_with_node8:
-    <<: *test_with_node6
-    docker:
-      - image: circleci/node:8
-        environment:
-          NODE_VERSION: 8
-
   test_with_node10:
-    <<: *test_with_node6
+    <<: *test_with_node8
     docker:
       - image: circleci/node:10
         environment:
@@ -44,6 +37,5 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - test_with_node6
       - test_with_node8
       - test_with_node10
