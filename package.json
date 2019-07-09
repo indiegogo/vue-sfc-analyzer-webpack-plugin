@@ -32,14 +32,13 @@
   "dependencies": {
     "chalk": "^2.3.2",
     "mkdirp": "^0.5.1",
-    "webpack": "^4.11.0",
     "winston": "^2.4.1"
   },
   "devDependencies": {
     "@types/jest": "24.0.15",
     "@types/mkdirp": "^0.5.2",
     "@types/node": "12.6.1",
-    "@types/webpack": "^4.4.2",
+    "@types/webpack": "4.4.34",
     "@types/winston": "^2.3.8",
     "css-loader": "^0.28.10",
     "jest": "24.8.0",
@@ -48,7 +47,8 @@
     "typescript": "3.5.3",
     "vue": "^2.5.16",
     "vue-loader": "^15.2.4",
-    "vue-template-compiler": "^2.5.16"
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "4.35.3"
   },
   "peerDependencies": {
     "webpack": "^4.0.0"
