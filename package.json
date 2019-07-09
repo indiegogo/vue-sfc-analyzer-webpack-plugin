@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/jest": "24.0.15",
-    "@types/mkdirp": "^0.5.2",
+    "@types/mkdirp": "0.5.2",
     "@types/node": "12.6.1",
     "@types/webpack": "4.4.34",
     "@types/winston": "^2.3.8",
